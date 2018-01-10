@@ -30,6 +30,23 @@ nodejs file system
     fs.writeFile('./text.txt', 'Hello world!');    
     ```
 
+- 적용
+    ```javaScript
+    var server = http.createServer();
+
+    server.on('request', (req, res)=>{
+        // 파일 비동기로 읽기
+        fs.readFile('backpack.png', (err, data)=>{
+            if(err) throw err;
+            res.writeHead(200, {'Content-Type':'image/png'});
+            res.write(data);
+            res.end('end');
+        });
+        // 스트림 열고 파이프 연결
+        var fileIs = fs.createReadStream('backpack.png', {flags:'r'});
+        fileIs.pipe(res);
+    });
+    ```
 
 
 ## 2. stream file
